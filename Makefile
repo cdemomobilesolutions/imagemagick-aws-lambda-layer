@@ -17,8 +17,8 @@ CONFIGURE = PKG_CONFIG_PATH=$(CACHE_DIR)/lib/pkgconfig \
 		CPPFLAGS=-I$(CACHE_DIR)/include \
 		LDFLAGS=-L$(CACHE_DIR)/lib \
 		--disable-dependency-tracking \
-		--disable-shared \
-		--enable-static \
+		--enable-shared \
+		--disable-static \
 		--prefix=$(CACHE_DIR)
 
 ## libjpg
@@ -142,8 +142,8 @@ $(TARGET_DIR)/bin/identify: $(IMAGE_MAGICK_SOURCE) $(LIBS)
 		CPPFLAGS=-I$(CACHE_DIR)/include \
 		LDFLAGS=-L$(CACHE_DIR)/lib \
 		--disable-dependency-tracking \
-		--disable-shared \
-		--enable-static \
+		--enable-shared \
+		--disable-static \
 		--prefix=$(TARGET_DIR) \
 		--enable-delegate-build \
 		--without-modules \

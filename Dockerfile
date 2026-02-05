@@ -7,8 +7,11 @@ COPY Makefile ./
 RUN dnf update -y
 RUN dnf groupinstall -y "Development Tools"
 RUN dnf install -y cmake
+RUN dnf install -y libffi libffi-devel python3 python3-pip
 
 RUN make all
+
+RUN pip3 install wand -t /opt/python
 
 WORKDIR /opt
 
