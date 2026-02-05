@@ -12,6 +12,7 @@ RUN dnf install -y libffi libffi-devel python3 python3-pip
 RUN make all
 
 RUN pip3 install wand -t /opt/python
+RUN pip3 install python-magic -t /opt/python
 
 WORKDIR /opt
 
