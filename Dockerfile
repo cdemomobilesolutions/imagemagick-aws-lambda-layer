@@ -1,12 +1,12 @@
-FROM public.ecr.aws/sam/build-nodejs18.x:latest
+FROM public.ecr.aws/sam/build-python3.13:latest
 
 WORKDIR /build
 
 COPY Makefile ./
 
-RUN yum update -y
-RUN yum groupinstall -y "Development Tools"
-RUN yum install -y cmake
+RUN dnf update -y
+RUN dnf groupinstall -y "Development Tools"
+RUN dnf install -y cmake
 
 RUN make all
 

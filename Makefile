@@ -1,10 +1,10 @@
-IMAGEMAGICK_VERSION=7.1.1-21
-LIBPNG_VERSION=1.6.40
+IMAGEMAGICK_VERSION=7.1.2-13
+LIBPNG_VERSION=1.6.54
 LIBJPG_VERSION=9e
-OPENJP2_VERSION=2.5.0
-LIBTIFF_VERSION= 4.6.0
+OPENJP2_VERSION=2.5.4
+LIBTIFF_VERSION=4.7.1
 BZIP2_VERSION=1.0.8
-LIBWEBP_VERSION=1.3.2
+LIBWEBP_VERSION=1.6.0
 
 TARGET_DIR ?= /opt/
 PROJECT_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
@@ -30,7 +30,7 @@ $(LIBJPG_SOURCE):
 
 $(CACHE_DIR)/lib/libjpeg.a: $(LIBJPG_SOURCE)
 	tar xf $<
-	cd jpeg*
+	cd jpeg-$(LIBJPG_VERSION)
 	$(CONFIGURE)	 
 	make
 	make install
@@ -45,7 +45,7 @@ $(LIBPNG_SOURCE):
 
 $(CACHE_DIR)/lib/libpng.a: $(LIBPNG_SOURCE)
 	tar xf $<
-	cd libpng*
+	cd libpng-$(LIBPNG_VERSION)
 	$(CONFIGURE)	 
 	make
 	make install
@@ -64,7 +64,7 @@ $(BZIP2_SOURCE):
 
 $(CACHE_DIR)/lib/libbz2.a: $(BZIP2_SOURCE)
 	tar xf $<
-	cd bzip2-*
+	cd bzip2-$(BZIP2_VERSION)
 	make libbz2.a
 	make install PREFIX=$(CACHE_DIR)
 
@@ -77,7 +77,7 @@ $(LIBTIFF_SOURCE):
 
 $(CACHE_DIR)/lib/libtiff.a: $(LIBTIFF_SOURCE) $(CACHE_DIR)/lib/libjpeg.a
 	tar xf $<
-	cd tiff-*
+	cd tiff-$(LIBTIFF_VERSION)
 	$(CONFIGURE)	 
 	make
 	make install
@@ -91,7 +91,7 @@ $(LIBWEBP_SOURCE):
 	
 $(CACHE_DIR)/lib/libwebp.a: $(LIBWEBP_SOURCE)
 	tar xf $<
-	cd libwebp-*
+	cd libwebp-$(LIBWEBP_VERSION)
 	sh autogen.sh
 	$(CONFIGURE)	 
 	make
@@ -107,7 +107,7 @@ $(OPENJP2_SOURCE):
 
 $(CACHE_DIR)/lib/libopenjp2.a: $(OPENJP2_SOURCE) $(CACHE_DIR)/lib/libpng.a $(CACHE_DIR)/lib/libtiff.a
 	tar xf $<
-	cd openjpeg-*
+	cd openjpeg-$(OPENJP2_VERSION)
 	mkdir -p build
 	cd build 
 	PKG_CONFIG_PATH=$(CACHE_DIR)/lib/pkgconfig cmake .. \
@@ -136,7 +136,7 @@ LIBS:=$(CACHE_DIR)/lib/libjpeg.a \
 
 $(TARGET_DIR)/bin/identify: $(IMAGE_MAGICK_SOURCE) $(LIBS)
 	tar xf $<
-	cd ImageMa*
+	cd ImageMagick-$(IMAGEMAGICK_VERSION)
 	PKG_CONFIG_PATH=$(CACHE_DIR)/lib/pkgconfig \
 		./configure \
 		CPPFLAGS=-I$(CACHE_DIR)/include \
